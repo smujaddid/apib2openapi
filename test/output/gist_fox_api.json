@@ -1,0 +1,612 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gist Fox API",
+    "version": "",
+    "description": "Gist Fox API is a **pastes service** similar to [GitHub's Gist](http://gist.github.com).\n\n## Authentication\n\nCurrently the Gist Fox API does not provide authenticated access.\n\n## Media Types\n\nWhere applicable this API uses the [HAL+JSON](https://github.com/mikekelly/hal_specification/blob/master/hal_specification.md) media-type to represent resources states and affordances.\n\nRequests with a message-body are using plain JSON to set or update resource states.\n\n## Error States\n\nThe common [HTTP Response Status Codes](https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md) are used."
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "headers": {
+              "Link": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/hal+json": {
+                "examples": {
+                  "response": {
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "/"
+                        },
+                        "gists": {
+                          "href": "/gists?{since}",
+                          "templated": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Retrieve the Entry Point",
+        "operationId": "Retrieve the Entry Point",
+        "description": "",
+        "tags": []
+      }
+    },
+    "/gists/{id}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.",
+            "headers": {
+              "Link": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GistModel"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "/gists/42"
+                        },
+                        "star": {
+                          "href": "/gists/42/star"
+                        }
+                      },
+                      "id": "42",
+                      "created_at": "2014-04-14T02:15:15Z",
+                      "description": "Description of Gist",
+                      "content": "String contents"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Retrieve a Single Gist",
+        "operationId": "Retrieve a Single Gist",
+        "description": "",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Gist in the form of a hash.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.",
+            "headers": {
+              "Link": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GistModel"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "/gists/42"
+                        },
+                        "star": {
+                          "href": "/gists/42/star"
+                        }
+                      },
+                      "id": "42",
+                      "created_at": "2014-04-14T02:15:15Z",
+                      "description": "Description of Gist",
+                      "content": "String contents"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Edit a Gist",
+        "operationId": "Edit a Gist",
+        "description": "To update a Gist send a JSON with updated value for one or more of the Gist resource attributes. All attributes values (states) from the previous version of this Gist are carried over by default if not included in the hash.",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Gist in the form of a hash.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "content": "Updated file contents"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "headers": {}
+          }
+        },
+        "summary": "Delete a Gist",
+        "operationId": "Delete a Gist",
+        "description": "",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Gist in the form of a hash.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/gists": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "HAL+JSON representation of Gist Collection Resource. The Gist resources in collections are embedded. Note the embedded Gists resource are incomplete representations of the Gist in question. Use the respective Gist link to retrieve its full representation.",
+            "headers": {
+              "Link": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Gists_CollectionModel"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "/gists"
+                        }
+                      },
+                      "_embedded": {
+                        "gists": [
+                          {
+                            "_links": {
+                              "self": {
+                                "href": "/gists/42"
+                              }
+                            },
+                            "id": "42",
+                            "created_at": "2014-04-14T02:15:15Z",
+                            "description": "Description of Gist"
+                          }
+                        ]
+                      },
+                      "total": 1
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List All Gists",
+        "operationId": "List All Gists",
+        "description": "",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "since",
+            "in": "query",
+            "description": "Timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ` Only gists updated at or after this time are returned.",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": "HAL+JSON representation of Gist Resource. In addition to representing its state in the JSON form it offers affordances in the form of the HTTP Link header and HAL links.",
+            "headers": {
+              "Link": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GistModel"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "/gists/42"
+                        },
+                        "star": {
+                          "href": "/gists/42/star"
+                        }
+                      },
+                      "id": "42",
+                      "created_at": "2014-04-14T02:15:15Z",
+                      "description": "Description of Gist",
+                      "content": "String contents"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create a Gist",
+        "operationId": "Create a Gist",
+        "description": "To create a new Gist simply provide a JSON hash of the *description* and *content* attributes for the new Gist.",
+        "tags": [
+          "Gist"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "description": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "description": "Description of Gist",
+                  "content": "String content"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gists/{id}/star": {
+      "put": {
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "headers": {}
+          }
+        },
+        "summary": "Star a Gist",
+        "operationId": "Star a Gist",
+        "description": "",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the gist in the form of a hash",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "No Content",
+            "headers": {}
+          }
+        },
+        "summary": "Unstar a Gist",
+        "operationId": "Unstar a Gist",
+        "description": "",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the gist in the form of a hash",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "get": {
+        "responses": {
+          "200": {
+            "description": "HAL+JSON representation of Star Resource.",
+            "headers": {
+              "Link": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/hal+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StarModel"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "_links": {
+                        "self": {
+                          "href": "/gists/42/star"
+                        }
+                      },
+                      "starred": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Check if a Gist is Starred",
+        "operationId": "Check if a Gist is Starred",
+        "description": "",
+        "tags": [
+          "Gist"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the gist in the form of a hash",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Gist",
+      "description": "Gist-related resources of *Gist Fox API*."
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Gist": {},
+      "GistModel": {
+        "type": "object",
+        "properties": {
+          "_links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              },
+              "star": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "_links": {
+            "self": {
+              "href": "/gists/42"
+            },
+            "star": {
+              "href": "/gists/42/star"
+            }
+          },
+          "id": "42",
+          "created_at": "2014-04-14T02:15:15Z",
+          "description": "Description of Gist",
+          "content": "String contents"
+        }
+      },
+      "Star": {},
+      "StarModel": {
+        "type": "object",
+        "properties": {
+          "_links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "starred": {
+            "type": "boolean"
+          }
+        },
+        "example": {
+          "_links": {
+            "self": {
+              "href": "/gists/42/star"
+            }
+          },
+          "starred": true
+        }
+      },
+      "Gist_Fox_API_Root": {},
+      "Gists_Collection": {},
+      "Gists_CollectionModel": {
+        "type": "object",
+        "properties": {
+          "_links": {
+            "type": "object",
+            "properties": {
+              "self": {
+                "type": "object",
+                "properties": {
+                  "href": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "_embedded": {
+            "type": "object",
+            "properties": {
+              "gists": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "_links": {
+                      "type": "object",
+                      "properties": {
+                        "self": {
+                          "type": "object",
+                          "properties": {
+                            "href": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "id": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "total": {
+            "type": "number"
+          }
+        },
+        "example": {
+          "_links": {
+            "self": {
+              "href": "/gists"
+            }
+          },
+          "_embedded": {
+            "gists": [
+              {
+                "_links": {
+                  "self": {
+                    "href": "/gists/42"
+                  }
+                },
+                "id": "42",
+                "created_at": "2014-04-14T02:15:15Z",
+                "description": "Description of Gist"
+              }
+            ]
+          },
+          "total": 1
+        }
+      }
+    }
+  }
+}

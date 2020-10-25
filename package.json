@@ -32,5 +32,8 @@
     "commander": "^6.2.0",
     "swagger2openapi": "^7.0.3",
     "yaml": "^1.10.0"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.0"
   }
 }

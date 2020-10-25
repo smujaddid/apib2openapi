@@ -1,0 +1,217 @@
+openapi: 3.0.0
+info:
+  title: Polls
+  version: ""
+  description: Polls is a simple API allowing consumers to view polls and vote in
+    them. You can view this documentation over at
+    [Apiary](http://docs.pollsapi.apiary.io).
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    questions_url: /questions
+      summary: Retrieve the Entry Point
+      operationId: Retrieve the Entry Point
+      description: ""
+      tags: []
+  "/questions/{question_id}":
+    get:
+      responses:
+        "200":
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    question: Favourite programming language?
+                    published_at: 2014-11-11T08:40:51.620Z
+                    url: /questions/1
+                    choices:
+                      - choice: Swift
+                        url: /questions/1/choices/1
+                        votes: 2048
+                      - choice: Python
+                        url: /questions/1/choices/2
+                        votes: 1024
+                      - choice: Objective-C
+                        url: /questions/1/choices/3
+                        votes: 512
+                      - choice: Ruby
+                        url: /questions/1/choices/4
+                        votes: 256
+      summary: View a Questions Detail
+      operationId: View a Questions Detail
+      description: ""
+      tags:
+        - Question
+      parameters:
+        - name: question_id
+          in: path
+          description: ID of the Question in form of an integer
+          required: true
+          example: "1"
+          schema:
+            type: number
+  "/questions/{question_id}/choices/{choice_id}":
+    post:
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+      summary: Vote on a Choice
+      operationId: Vote on a Choice
+      description: This action allows you to vote on a question's choice.
+      tags:
+        - Question
+      parameters:
+        - name: question_id
+          in: path
+          description: ID of the Question in form of an integer
+          required: true
+          example: "1"
+          schema:
+            type: number
+        - name: choice_id
+          in: path
+          description: ID of the Choice in form of an integer
+          required: true
+          example: "1"
+          schema:
+            type: number
+  /questions:
+    get:
+      responses:
+        "200":
+          description: OK
+          headers:
+            Link:
+              schema:
+                type: string
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    - question: Favourite programming language?
+                      published_at: 2014-11-11T08:40:51.620Z
+                      url: /questions/1
+                      choices:
+                        - choice: Swift
+                          url: /questions/1/choices/1
+                          votes: 2048
+                        - choice: Python
+                          url: /questions/1/choices/2
+                          votes: 1024
+                        - choice: Objective-C
+                          url: /questions/1/choices/3
+                          votes: 512
+                        - choice: Ruby
+                          url: /questions/1/choices/4
+                          votes: 256
+      summary: List All Questions
+      operationId: List All Questions
+      description: ""
+      tags:
+        - Question
+      parameters:
+        - name: page
+          in: query
+          description: The page of questions to return
+          required: false
+          example: "1"
+          schema:
+            type: number
+    post:
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              examples:
+                response:
+                  value:
+                    question: Favourite programming language?
+                    published_at: 2014-11-11T08:40:51.620Z
+                    url: /questions/2
+                    choices:
+                      - choice: Swift
+                        url: /questions/2/choices/1
+                        votes: 0
+                      - choice: Python
+                        url: /questions/2/choices/2
+                        votes: 0
+                      - choice: Objective-C
+                        url: /questions/2/choices/3
+                        votes: 0
+                      - choice: Ruby
+                        url: /questions/2/choices/4
+                        votes: 0
+      summary: Create a New Question
+      operationId: Create a New Question
+      description: >-
+        You may create your own question using this action. It takes a JSON
+        object containing a question and a collection of answers in the form of
+        choices.
+
+
+        + question (string) - The question
+
+
+        + choices (array[string]) - A collection of choices.
+      tags:
+        - Question
+      parameters:
+        - name: page
+          in: query
+          description: The page of questions to return
+          required: false
+          example: "1"
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                question:
+                  type: string
+                choices:
+                  type: array
+                  items:
+                    type: string
+              example:
+                question: Favourite programming language?
+                choices:
+                  - Swift
+                  - Python
+                  - Objective-C
+                  - Ruby
+tags:
+  - name: Question
+    description: Resources related to questions in the API.
+servers:
+  - url: http://polls.apiblueprint.org/
+components:
+  schemas:
+    Question: {}
+    Choice: {}
+    Polls_API_Root: {}
+    Questions_Collection: {}
