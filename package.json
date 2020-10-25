@@ -1,0 +1,30 @@
+{
+  "name": "apib2openapi",
+  "version": "0.1.0",
+  "description": "Convert API Blueprint to OpenAPI 3.0.0",
+  "engines": {
+    "node": ">=10.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smujaddid/apib2openapi.git"
+  },
+  "keywords": [
+    "blueprint",
+    "openapi",
+    "swagger"
+  ],
+  "author": "Sibghatullah Mujaddid",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smujaddid/apib2openapi/issues"
+  },
+  "homepage": "https://github.com/smujaddid/apib2openapi#readme",
+  "dependencies": {
+    "commander": "^6.2.0"
+  }
+}
