@@ -6,6 +6,9 @@
     "node": ">=10.0.0"
   },
   "main": "index.js",
+  "bin": {
+    "apib2openapi": "./bin/apib2openapi.js"
+  },
   "scripts": {
     "test": "mocha"
   },
