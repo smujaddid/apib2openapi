@@ -25,6 +25,9 @@
   },
   "homepage": "https://github.com/smujaddid/apib2openapi#readme",
   "dependencies": {
-    "commander": "^6.2.0"
+    "apib2swagger": "^1.12.0",
+    "commander": "^6.2.0",
+    "swagger2openapi": "^7.0.3",
+    "yaml": "^1.10.0"
   }
 }
