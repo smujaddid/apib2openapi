@@ -21,7 +21,7 @@
     "openapi",
     "swagger"
   ],
-  "author": "Sibghatullah Mujaddid",
+  "author": "Sibghatullah Mujaddid (https://github.com/smujaddid)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/smujaddid/apib2openapi/issues"
