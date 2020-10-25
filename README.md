@@ -74,4 +74,4 @@ transition to OpenAPI 3.0 easier.
 
 MIT
 
-Copyright (c) 2015 Sibghatullah Mujaddid
+Copyright (c) 2020 Sibghatullah Mujaddid
