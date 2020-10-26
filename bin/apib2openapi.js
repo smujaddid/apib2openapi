@@ -54,7 +54,7 @@ function main(input, options) {
 }
 
 let input = '';
-if (process.stdin.isTTY) {
+if (process.stdin.isTTY || Program.input) {
     if (!Program.input) {
         Program.outputHelp();
         process.exit(1);
