@@ -1,6 +1,6 @@
 {
   "name": "apib2openapi",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Convert API Blueprint to OpenAPI 3.0.0",
   "engines": {
     "node": ">=10.0.0"
