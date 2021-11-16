@@ -29,11 +29,11 @@
   "homepage": "https://github.com/smujaddid/apib2openapi#readme",
   "dependencies": {
     "apib2swagger": "^1.12.0",
-    "commander": "^6.2.0",
-    "swagger2openapi": "^7.0.4",
-    "yaml": "^1.10.0"
+    "commander": "^6.2.1",
+    "swagger2openapi": "^7.0.8",
+    "yaml": "^1.10.2"
   },
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "mocha": "^8.4.0"
   }
 }
