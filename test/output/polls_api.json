@@ -314,7 +314,7 @@
   ],
   "servers": [
     {
-      "url": "http://polls.apiblueprint.org/"
+      "url": "http://polls.apiblueprint.org"
     }
   ],
   "components": {

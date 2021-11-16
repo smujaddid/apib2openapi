@@ -208,7 +208,7 @@ tags:
   - name: Question
     description: Resources related to questions in the API.
 servers:
-  - url: http://polls.apiblueprint.org/
+  - url: http://polls.apiblueprint.org
 components:
   schemas:
     Question: {}
